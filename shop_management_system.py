@@ -63,8 +63,7 @@ def add_product(name, price, stock):
     except mysql.connector.Error as err:
         print(f"Error: {err}")
 
-# Handle selling products (making a sale)
-def sell_to_customer(cart, payment_mode):
+def sell_to_customer(cart):
     """
     Processes a sale and updates the stock in the inventory.
 
@@ -73,6 +72,7 @@ def sell_to_customer(cart, payment_mode):
     - payment_mode: The payment method used for the purchase (Cash/Card).
     """
     try:
+
         with connect_db() as db:
             cursor = db.cursor()
     
@@ -80,6 +80,16 @@ def sell_to_customer(cart, payment_mode):
             total_amount = 0
             for item in cart:
                 product, quantity = item
+                
+                # Check if there is enough stock before proceeding with the sale
+                if product[3] < quantity:
+                    print(f"\nError: Not enough stock for product '{product[1]}'. Only {product[3]} items available.")
+                    return  # Exit the function if any product has insufficient stock
+                
+                # Ask for payment mode and generate the bill
+                payment_mode = input("Enter payment mode (Cash/Card): ").capitalize()
+
+
                 total_cost = product[2] * quantity
                 total_amount += total_cost
                 new_stock = product[3] - quantity
@@ -89,7 +99,6 @@ def sell_to_customer(cart, payment_mode):
                 sale_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 cursor.execute("INSERT INTO sales (product_id, quantity, total_amount, sale_date, payment_mode) VALUES (%s, %s, %s, %s, %s)",
                             (product[0], quantity, total_cost, sale_date, payment_mode))
-
             db.commit()
         
         # Print receipt
@@ -97,7 +106,6 @@ def sell_to_customer(cart, payment_mode):
 
     except mysql.connector.Error as err:
         print(f"Error: {err}")
-
 # Generate a bill manually (no cart, user inputs products directly)
 def generate_bill_manually():
     """
@@ -127,9 +135,7 @@ def generate_bill_manually():
         print("\nNo products selected for purchase.")
         return
 
-    # Ask for payment mode and generate the bill
-    payment_mode = input("Enter payment mode (Cash/Card): ").capitalize()
-    sell_to_customer(cart, payment_mode)
+    sell_to_customer(cart)
 
 # View inventory (list all products and their stock)
 def view_inventory():
@@ -172,7 +178,7 @@ def sales_report():
     else:
         print("No sales recorded.")
     print("----------------")
-    
+
 # Function to search a product by name
 def search_product_by_name(name):
     """
@@ -343,7 +349,7 @@ def purchase_section():
         print("4. Regenerate Bill")
         print("5. Back to Main Menu")
         
-        sub_choice = input("\nEnter your choice (1-4): ")
+        sub_choice = input("\nEnter your choice (1-5): ")
         
         if sub_choice == '1':
             product_id = int(input("\nEnter product ID: "))
@@ -365,8 +371,7 @@ def purchase_section():
             if not cart:
                 print("\nCart is empty. Cannot finalize bill.")
             else:
-                payment_mode = input("Enter payment mode (Cash/Card): ").capitalize()
-                sell_to_customer(cart, payment_mode)
+                sell_to_customer(cart)
                 break
         elif sub_choice == '3':
             generate_bill_manually()  # Allow manual bill generation
