@@ -44,7 +44,7 @@ CREATE TABLE purchase_history (
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL,
-    payment_mode VARCHAR(20) NOT NULL,
+    payment_mode VARCHAR(20) AFTER sale_date;
     purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
