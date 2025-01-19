@@ -146,6 +146,8 @@ def view_inventory():
     else:
         print("No products in inventory.")
     print("----------------")
+    cursor.close()
+    db.close()
 
 # Sales Report Section
 def sales_report():
@@ -167,6 +169,9 @@ def sales_report():
     else:
         print("No sales recorded.")
     print("----------------")
+    cursor.close()
+    db.close()
+
 
 # Function to search a product by name
 def search_product_by_name(name):
@@ -189,6 +194,11 @@ def search_product_by_name(name):
     else:
         print("No product found with that name.")
     print("----------------")
+
+    cursor.close()
+    db.close()
+
+
 
 # Restock a product
 def restock_product(product_id, quantity):
