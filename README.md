@@ -33,7 +33,23 @@ CREATE TABLE IF NOT EXISTS sales (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 ```
-4. Sales report
+
+4. SQL Query for Creating purchase_history Table:
+Before proceeding, ensure the following SQL query is executed to create the purchase_history table in your MySQL database.
+
+```sql
+
+CREATE TABLE purchase_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    payment_mode VARCHAR(20) NOT NULL,
+    purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+```
+5. Sales report
 
 The Sales Report feature in code is built on data stored in the sales table. The sales table already contains all the necessary information for generating a sales report, such as:
 
