@@ -33,6 +33,15 @@ CREATE TABLE IF NOT EXISTS sales (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 ```
+4. Sales report
+
+The Sales Report feature in code is built on data stored in the sales table. The sales table already contains all the necessary information for generating a sales report, such as:
+
+sales_id: Unique identifier for each sale.
+product_id: Foreign key to the products table, which links the sale to a specific product.
+quantity: The number of units sold.
+total_amount: The total amount of the sale.
+sale_date: The date and time the sale occurred.
 
 # Summary of the Table Structure:
 products Table:
