@@ -107,3 +107,5 @@ product_id: Foreign key to the products table (the product being sold).
 quantity: The quantity of the product sold.
 total_amount: The total cost for the sale.
 sale_date: The date and time the sale occurred.
+
+https://onedrive.live.com/:w:/g/personal/F096D08D71AECC03/EY38Ahj-LtdNp86E8pH2_-8Bbq91MAohGmOfwkool7qYLA?resid=F096D08D71AECC03!s1802fc8d2efe4dd7a7ce84f291f6ffef&ithint=file%2Cdocx&e=S6gN71&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3cvYy9mMDk2ZDA4ZDcxYWVjYzAzL0VZMzhBaGotTHRkTnA4NkU4cEgyXy04QmJxOTFNQW9oR21PZndrb29sN3FZTEE_ZT1TNmdONzE
